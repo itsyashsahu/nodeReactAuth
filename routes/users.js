@@ -11,6 +11,7 @@ const JWT_SECRET = "dheredherebol koi sun na le";
 //middle to check if the user is logged in or not
 const requireLogin = (req,res,next) => {
   const {authorization} = req.headers;
+  console.log("yeh pakda")
   if(!authorization){
     return res.status(401).json({error:"You must be logged In "});
   }
@@ -49,8 +50,8 @@ router.get('/',requireLogin, async function(req, res, next) {
 router.post('/signup', async function(req, res, next) {
   try{
     
-    const { firstname, lastname ,email,phone ,address,password } = req.body;
-    // console.log(req.body);
+    const { firstName, lastName ,email,phone ,address,password } = req.body;
+    console.log(req.body);
     // console.log(name,email,password);
     if(!email || !password ){
       // status 422 means client jo karna chahta h wo server samajh gaya h 
@@ -67,31 +68,19 @@ router.post('/signup', async function(req, res, next) {
     }
 
     const hashedPass = await bcrypt.hash(password,12);
-    var userId;
-    await new User({
-      firstname:firstname,
-      lastname:lastname,
+
+    const createdUser = await new User({
+      firstName:firstName,
+      lastName:lastName,
       email:email,
       phone:phone,
       address:address,
       password:hashedPass,
-    }).save((err,users)=>{
-      userId = users.id;
-      // console.log("yeh mila kya",userId,users.id);
-      const token = jwt.sign({ userId: userId }, JWT_SECRET);
-      // console.log("this is userID ",userId);
-      return res.status(201).json({token});
-    })
+    }).save()
 
-    // retrive object id from these and sign the token with it and send the token in response 
-
-    // console.log(responst.id,"asdlfkhjas")
-
-    // const token = await jwt.sign({ userId: userId }, JWT_SECRET);
-    // console.log("this is userID ",userId);
-    // return res.status(201).json({token});
-    // res.status(200).json({message:"You Can Login Now "});
-    res.status(500).json({message:"Unable to register, please try again"});
+    
+    const token = jwt.sign({ userId: createdUser.id }, JWT_SECRET);
+    return res.status(201).json({token});
 
   }catch(err){
     console.log(err);
@@ -131,6 +120,8 @@ router.post('/signin', async function(req, res, next) {
       // generating jwt token 
       // console.log("do match is true",user.name)
       const token = await jwt.sign({userId:user._id},JWT_SECRET);
+      // res.cookie("cookieToken", jwt.sign({ name: "John Doe", favColor: "green" }, jwtsecret), { httpOnly: true })
+      // res.redirect("/")
       return res.status(201).json({token});
     }else{
       return res.status(401).json({error:"Email or Password is Invalid"});   
