@@ -41,5 +41,5 @@ Live App Link --> https://reactnodeauth.herokuapp.com/
 
 <h3>Error Handling</h3>
 
-![Error Handling](screenshots/Screenshot_5.png "Error Handling of the web-app")
+![Error Handling](screenshots/Screenshot_6.png "Error Handling of the web-app")
 
