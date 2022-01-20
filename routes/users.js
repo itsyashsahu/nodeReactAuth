@@ -4,14 +4,15 @@ var router = express.Router();
 const bcrypt = require('bcryptjs');
 const User = require('../db/userSchema');
 const jwt = require('jsonwebtoken');
-// const JWT_SECRET = process.env.JWT_SECRET;
-const JWT_SECRET = "dheredherebol koi sun na le";
+const JWT_SECRET = process.env.JWT_SECRET;
+// console.log(process.env.JWT_SECRET)
+// const JWT_SECRET = "dheredherebol koi sun na le";
 
 
 //middle to check if the user is logged in or not
 const requireLogin = (req,res,next) => {
   const {authorization} = req.headers;
-  console.log("yeh pakda")
+  // console.log("yeh pakda")
   if(!authorization){
     return res.status(401).json({error:"You must be logged In "});
   }
@@ -51,7 +52,7 @@ router.post('/signup', async function(req, res, next) {
   try{
     
     const { firstName, lastName ,email,phone ,address,password } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     // console.log(name,email,password);
     if(!email || !password ){
       // status 422 means client jo karna chahta h wo server samajh gaya h 

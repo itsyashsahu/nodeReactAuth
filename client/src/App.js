@@ -12,16 +12,16 @@ import Intro from "./comp/Intro";
 
 function App() {
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   
-  useEffect(() =>{
-    const isAuth = UseAuth();
-    console.log(isAuth);
-    if(isAuth){
-      navigate("/dashboard");
-    }
+  // useEffect(() =>{
+  //   const isAuth = UseAuth();
+  //   // console.log(isAuth);
+  //   if(isAuth){
+  //     navigate("/dashboard");
+  //   }
 
-  },[])
+  // },[navigate])
 
   return (
     <div className="App">

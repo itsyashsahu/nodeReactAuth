@@ -5,7 +5,7 @@ import axios from "axios";
 import img1 from "../img/3.jpg";
 import { TextField } from "./TextField";
 import { TextFieldName } from "./TextFieldName";
-import { Formik, Form ,useFormik} from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 
 import passwordSvg from "../img/svg/password.svg";
@@ -25,7 +25,7 @@ export default function Signup() {
       navigate("/dashboard");
     }
 
-  },[])
+  },[navigate])
 
 
   const validate = Yup.object({
@@ -60,22 +60,19 @@ export default function Signup() {
     axios
       .post("api/users/signup", values)
       .then((res) => {
-        console.log("successfully",res);
+        // console.log("successfully",res);
         if (res.status === 201) {
           setAuthToken(res.data.token);
-          // history.push("./signin")
-          // navigate("/login");
+          localStorage.setItem("jwtToken",res.data.token);
+          navigate("/dashboard")
         }
       })
       .catch((err) => {
-        console.log(err);
-        if (err.response.status === 424) {
-          // setError(err.response.data.error);
-          console.log("Hellow world", err.response);
-        }
+        // console.log(err);
+        actions.setErrors(err.response.status);
+        
       });
       // console.log(formik);
-      actions.setErrors("201")
     
   };
 
@@ -184,7 +181,7 @@ export default function Signup() {
                   </div>
                   
 
-                  {(formik.errors==424) ? (
+                  {(formik.errors===424) ? (
                     <>
                       <button
                         type="submit"

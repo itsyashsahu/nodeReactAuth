@@ -11,7 +11,7 @@ export const TextField = ({ label,svg, ...props }) => {
         className={`flex relative ${meta.touched && meta.error && 'outline-red-400 outline md:outline-blue-400'}`}
         >
         <span className=" inline-flex  items-center px-3 border-t bg-white border-l border-b  border-gray-300 text-gray-500 shadow-sm text-sm">
-            <img src={svg} />
+            <img src={svg} alt="svg" />
         </span>
       {/* <label htmlFor={field.name}>{label}</label> */}
       <input
